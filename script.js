@@ -15,29 +15,29 @@ function togglePlay() {
   }
 }
 
-// Update Play/Pause Button
+// Update play button
 function updateButton() {
   toggle.textContent = video.paused ? '►' : '❚ ❚';
 }
 
-// Update Progress Bar
+// Update progress bar
 function handleProgress() {
   const percent = (video.currentTime / video.duration) * 100;
   progressFilled.style.flexBasis = `${percent}%`;
 }
 
-// Seek Video
+// Seek video
 function scrub(e) {
   const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
   video.currentTime = scrubTime;
 }
 
-// Volume & Playback Speed
+// Update volume and playback speed
 function handleRangeUpdate() {
   video[this.name] = this.value;
 }
 
-// Skip Forward / Backward
+// Skip video
 function skip() {
   video.currentTime += parseFloat(this.dataset.skip);
 }
@@ -58,12 +58,11 @@ skipButtons.forEach(button =>
   button.addEventListener('click', skip)
 );
 
-// Progress Bar Click
-let mouseDown = false;
+let mousedown = false;
 
 progress.addEventListener('click', scrub);
-progress.addEventListener('mousedown', () => mouseDown = true);
-progress.addEventListener('mouseup', () => mouseDown = false);
 progress.addEventListener('mousemove', (e) => {
-  if (mouseDown) scrub(e);
+  if (mousedown) scrub(e);
 });
+progress.addEventListener('mousedown', () => mousedown = true);
+progress.addEventListener('mouseup', () => mousedown = false);
